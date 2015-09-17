@@ -3,7 +3,7 @@
     <head>
         <title>Guy Brukhis - Full-Stack Web Developer in Tel-Aviv</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+        <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
         <meta name="description=" content="Guy Brukhis is a Full-Stack Web Developer in Tel-Aviv">
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css' />
@@ -11,6 +11,14 @@
     </head>
     <body>
         <div id="main">
+            <div class='email-result-msg'>
+                <div class='alert email-success'>
+                    Thanks, I got it!
+                </div>
+                <div class='alert email-fail'>
+                    Something went wrong :( Please contact me directly at <a href="mailto:guy.br7@gmail.com">contact@guyb7.com</a>
+                </div>
+            </div>
             <h1>Guy Brukhis</h1>
             <h2>Full-Stack Web Developer in Tel-Aviv, Israel</h2>
             <section class='clearfix'>
@@ -19,7 +27,7 @@
                     Hey, I'm Guy. I build and launch internet things, and love doing it.
                 </p>
                 <p class='hello-text'>
-                    I never refuse friendly chats over a beer, feel free to <a href="#contact">reach out</a>!
+                    I never refuse friendly chats over a beer; Feel free to <a href="#contact">reach out</a>!
                 </p>
             </section>
             
@@ -140,14 +148,39 @@
                     <strong>Phone</strong> +972-544454234
                 </div>
                 <div class='col-4'>
-                    <form id='contact_form' action='/contact' method='POST'>
-                        <input id='contact_name' type="text" placeholder="Your first name"/>
-                        <input id='contact_email' type="email" placeholder="Where should I mail you back?" />
-                        <textarea id='contact_content' placeholder="What's on your mind?"></textarea>
+                    <form id='contact_form' action='/contact' method='POST' autocomplete="off">
+                        <input id='contact_name' name='contact_name' type="text" placeholder="Your first name"/>
+                        <input id='contact_email' name='contact_email' type="email" placeholder="Where should I mail you back?" />
+                        <textarea id='contact_content' name='contact_content' placeholder="What's on your mind?"></textarea>
                         <input type='submit' value='Send'/>
                     </form>
                 </div>
             </section>
         </div>
     </body>
+    <script>
+        var contact_form = document.getElementById('contact_form');
+        contact_form.onsubmit = function(event) {
+            event = event || window.event
+            event.preventDefault();
+            ajax({
+                url: '/contact',
+                method: 'POST',
+                params: {
+                    ajax: true,
+                    contact_name: document.getElementById('contact_name').value,
+                    contact_email: document.getElementById('contact_email').value,
+                    contact_content: document.getElementById('contact_content').value
+                },
+                success: function(){contact_sent('success')},
+                error: function(){contact_sent('fail')},
+                fail: function(){contact_sent('fail')}
+            });
+        }
+        function contact_sent(result) {
+            var html = document.querySelectorAll('#main > .email-result-msg > .email-' + result)[0];
+            contact_form.outerHTML = html.outerHTML;
+        }
+function extend(e,t){var n=Object.create(e);return Object.keys(t).map(function(e){e in n&&(n[e]=t[e])}),n}function ajax(e){var t=extend({url:"",method:"GET",params:{},success:function(){},error:function(e){alert("Application Error: "+JSON.stringify(e)),console.log(e)},fail:function(e){alert("Network Error: "+e),console.log(e)},contentType:"application/x-www-form-urlencoded"},e),n="";if(t.params)if("string"==typeof t.params||t.params instanceof String)n=t.params;else{var r=[];for(var o in t.params)r.push(o+"="+t.params[o]);n+=r.join("&")}"POST"!==t.method&&"post"!==t.method&&(t.method="GET",t.url+="?"+n);var s=createCORSRequest(t.method,t.url);if(!s)throw new Error("CORS not supported");s.withCredentials=!0,s.onreadystatechange=function(){if(s.readyState==XMLHttpRequest.DONE)if(200==s.status){var e=JSON.parse(s.responseText);e&&e.success&&1==e.success?t.success(e):t.error(e)}else t.fail(s.responseText,s.status)},s.onload=function(){s.responseText},s.onerror=function(){console.log("There was an error!")},"POST"===t.method||"post"===t.method?(s.setRequestHeader("Content-type",t.contentType),s.send(n)):s.send()}function createCORSRequest(e,t){var n=new XMLHttpRequest;return"withCredentials"in n?n.open(e,t,!0):"undefined"!=typeof XDomainRequest?(n=new XDomainRequest,n.open(e,t)):n=null,n}
+    </script>
 </html>

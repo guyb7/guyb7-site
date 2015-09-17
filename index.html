@@ -163,25 +163,33 @@
     </body>
     <script>
         var contact_form = document.getElementById('contact_form');
+        var sending = false;
         contact_form.onsubmit = function(event) {
             event = event || window.event
             event.preventDefault();
-            var name_el    = document.getElementById('contact_name');
-            var email_el   = document.getElementById('contact_name');
-            var content_el = document.getElementById('contact_name');
-            ajax({
-                url: '/contact',
-                method: 'POST',
-                params: {
-                    ajax: true,
-                    contact_name: name_el.value,
-                    contact_email: email_el.value,
-                    contact_content: content_el.value
-                },
-                success: function(){contact_sent('success')},
-                error: function(){contact_sent('fail')},
-                fail: function(){contact_sent('fail')}
-            });
+            if (sending === false) {
+                var name_el    = document.getElementById('contact_name');
+                var email_el   = document.getElementById('contact_email');
+                var content_el = document.getElementById('contact_content');
+                name_el.disabled = true;
+                email_el.disabled = true;
+                content_el.disabled = true;
+                contact_form.className = 'sending';
+                sending = true;
+                ajax({
+                    url: '/contact',
+                    method: 'POST',
+                    params: {
+                        ajax: true,
+                        contact_name: name_el.value,
+                        contact_email: email_el.value,
+                        contact_content: content_el.value
+                    },
+                    success: function(){contact_sent('success')},
+                    error: function(){contact_sent('fail')},
+                    fail: function(){contact_sent('fail')}
+                });
+            }
         }
         function contact_sent(result) {
             var html = document.querySelectorAll('#main > .email-result-msg > .email-' + result)[0];

@@ -152,6 +152,14 @@ h3, strong {
     outline: none;
 }
 
+#contact_form.sending:hover, #contact_form.sending input:hover, #contact_form.sending textarea:hover {
+    cursor: wait;
+}
+#contact_form.sending > [type=submit] {
+    color: #444;
+    background-color: #e6e6e6;
+}
+
 
 @media (max-width: 797px) {
     body {

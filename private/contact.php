@@ -13,7 +13,7 @@ if (empty($_POST['contact_name']) && empty($_POST['contact_email']) && empty($_P
 function send_email() {
     $name = empty($_POST['contact_name']) ? 'Anonymous' : $_POST['contact_name'];
     $address = empty($_POST['contact_email']) ? '[NO_EMAIL]' : $_POST['contact_email'];
-    $message = empty($_POST['contact_content']) ? '[NO_MESSAGE]' : $_POST['contact_content'];
+    $message = empty($_POST['contact_content']) ? '[NO_MESSAGE]' : preg_replace('/\n/', '<br/>', $_POST['contact_content']);
     
     $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">

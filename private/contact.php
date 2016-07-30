@@ -3,8 +3,10 @@
 $base_url = 'guyb7local.com';
 
 if (empty($_POST['contact_name']) && empty($_POST['contact_email']) && empty($_POST['contact_content'])) {
-    header("HTTP/1.0 302 Found");
-    header('Location: //' . $base_url);
+    complete(false, 'error-empty');
+    exit;
+} else if (preg_match('/http/', $_POST['contact_content']) && (empty($_POST['contact_captcha']) || !preg_match('/(Y7xp33|6Bp9Hz)/i', $_POST['contact_captcha']))) {
+    complete(false, 'error-captcha');
     exit;
 } else {
     send_email();
@@ -56,10 +58,14 @@ function send_email() {
     }
 }
 
-function complete($success = true) {
+function complete($success = true, $error = false) {
     if (!empty($_POST['ajax']) && $_POST['ajax'] == 'true') {
         header('Content-Type: application/json');
-        echo json_encode(array('success' => $success), JSON_NUMERIC_CHECK);
+        if ($success) {
+            echo json_encode(array('success' => $success), JSON_NUMERIC_CHECK);
+        } else {
+            echo json_encode(array('success' => $success, 'error' => $error), JSON_NUMERIC_CHECK);
+        }
     } else {
         $html = str_replace('<body>', '<body class="message-email-'. ($success ? 'success' : 'fail') . '">', file_get_contents(dirname(__FILE__) . '/../index.html'));
         echo $html;

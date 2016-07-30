@@ -15,6 +15,12 @@
                 <div class='alert email-success'>
                     Thanks, I got it!
                 </div>
+                <div class='alert email-error-empty'>
+                    C'mon, don't send an empty form.
+                </div>
+                <div class='alert email-error-captcha'>
+                    Wrong captcha, don't spam please.
+                </div>
                 <div class='alert email-fail'>
                     Something went wrong :( Please contact me directly at <a href="mailto:guy.br7@gmail.com">guy.br7@gmail.com</a>
                 </div>
@@ -165,6 +171,10 @@
                         <input id='contact_name' name='contact_name' type="text" placeholder="Your first name"/>
                         <input id='contact_email' name='contact_email' type="email" placeholder="Where should I mail you back?" />
                         <textarea id='contact_content' name='contact_content' placeholder="What's on your mind?"></textarea>
+                        <div id="captcha_container">
+                            <img src="">
+                            <input id='contact_captcha' name='contact_captcha' type="text" placeholder="Insert the text above" />
+                        </div>
                         <input type='submit' value='Send'/>
                     </form>
                 </div>
@@ -172,18 +182,21 @@
         </div>
     </body>
     <script>
-        var contact_form = document.getElementById('contact_form');
+        var contact_form      = document.getElementById('contact_form');
+        var name_el           = document.getElementById('contact_name');
+        var email_el          = document.getElementById('contact_email');
+        var content_el        = document.getElementById('contact_content');
+        var captcha_el        = document.getElementById('contact_captcha');
+        var captcha_container = document.getElementById('captcha_container');
         var sending = false;
         contact_form.onsubmit = function(event) {
             event = event || window.event
             event.preventDefault();
             if (sending === false) {
-                var name_el    = document.getElementById('contact_name');
-                var email_el   = document.getElementById('contact_email');
-                var content_el = document.getElementById('contact_content');
                 name_el.disabled = true;
                 email_el.disabled = true;
                 content_el.disabled = true;
+                captcha_el.disabled = true;
                 contact_form.className = 'sending';
                 sending = true;
                 ajax({
@@ -193,12 +206,26 @@
                         ajax: true,
                         contact_name: name_el.value,
                         contact_email: email_el.value,
-                        contact_content: content_el.value
+                        contact_content: content_el.value,
+                        contact_captcha: captcha_el.value
                     },
                     success: function(){contact_sent('success')},
-                    error: function(){contact_sent('fail')},
+                    error: function(e){
+                        contact_sent(e.error? e.error : 'fail')
+                    },
                     fail: function(){contact_sent('fail')}
                 });
+            }
+        }
+        content_el.onkeyup = function() {
+            if (content_el.value.match(/http/)) {
+                if (captcha_container.getAttribute('class') !== 'visible') {
+                    var str = ['data:image/jpg;base64,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', 'data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDABYPERMRDhYTEhMZFxYaITckIR4eIUQwMyg3UEZUU09GTUxYY39sWF54X0xNbpZweIOHjpCOVmqcp5uKpn+Ljon/2wBDARcZGSEdIUEkJEGJW01biYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYn/wAARCAA5ASwDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAUGBAMC/8QALRAAAQQCAQQBAgUFAQAAAAAAAAECAwQFESEGEhMxQRRRFSIycYEWM2FikcH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A1wAAA8p7EFZnfPKyNu9bcuj7Y9kjUcxyOavpUXYH0DkyORr46JJLCu5XSI1NqpEl6oksTNgxlR0kjvmTjQGmBksjJ1FWrralsMY1PbGa4LVXJ9uHjuW2qiqnOk9gUwQHdVVHMVIYpHy/DNez1oZ9tidtezXfXmcnCO9KBVsWYKzO6eVsbfu5RBZgsN3DKyRP9V2Q6ULMplrMtpFekDu1kbvSfwfPUETMcte3WRIl70a7t42gGjBJu5j6B0fnhd43609OTrbkqiweZZUazetu4A6weMNqCf8AtSsf+ynsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAq6RVX0gPG73JSnVqbd43aT78AZGOalkMnZt5O0iQRv1HEq+9el0aOllMW9jYq1iNEamkb6Mz0xiaWQbJJaXue1+vHv4K+fwlP8OfNBE2GSJNorU1sC6+OOVEV7WvT42mzGXri4rqaSVsPcip+lEL3Sth9jDsWR3c5qq3+CRkpY4er2Om7UZ2om3evQHBmb2TyEfkkgfFXT41warB2Ib2IjRrU/K3tVF+FPDL5nHx0XsSRsqvTSNbycvRsNmOCV0rFZE9dsRQOXA14I+oLLZdeRqr2Ip2dXReNta4xNOjeibT7ErqhJKWcZYrv7HPRF2nwp9Oq5rNMYkk0bok54cgFt1KdXsyGPkRskjUV7HenEfqB2WtQI6et2RwrtdcmqqxPqUGR68j4260nyTbmTmfWkhkx87XOaqcJtAOLKuknwlK2ibSNUc/jfBTSPHZigjGqxW+1Rq60p84KGR2I8FqPtRdp2qnwSoMPFTyUkU7nshfzHI12k/ZQPvp7GRwZGdHSOSSF3Dd/BevZGtRbuZ+l1tG/Kkh+DnrzfW4+450iJ6fz3J9j6mZXz0DYpHeC7CvpfaL/AOoB52OrIWIix1pHIq62vBoK8vmgZKia7k3oi3cc6bCyR3GRsli5a9nzr5HT+TWfGKyNnfLAmlbv2gF4HHj8jBfY5Y9texdPjd7ap2AAAAAAAAAAAAAAAAAAAAAAAAAAABlbeCv0b7rmIci9yr+RVTj/AKelmLqDJVkrTQRQMXh7u7lf+GmAECHE3sfRbXx8rEe7l73fH7HP/Sr7Mvmv3XSPX3pDTgCTV6cxtZUckPeqfL12UZY3fTujgVI3a01dej1AGXk6WntyrJduq93+EKGKwEWNm8rJ5HLrWlXgsAAAABPv4iveXb1e1fu12igAJlPGz0lckVtz41Thr03pSJaxGa/EPrI3xukT0qcGuAGfyEWZt4lIvGxsrl07S+0JuPwubqtcyF7IEf8AqXe1NkAImGwTqFh1mawskr/euELYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//Z'];
+                    captcha_container.querySelector('img').setAttribute('src', str[Math.round(Math.random())]);
+                    captcha_container.setAttribute('class', 'visible');
+                }
+            } else {
+                captcha_container.setAttribute('class', '');
             }
         }
         function contact_sent(result) {

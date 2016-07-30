@@ -77,7 +77,7 @@ body.message-email-fail .email-result-msg .email-fail {
     background-color: #dff0d8;
     border-color: #d6e9c6;
 }
-.email-fail {
+.email-fail, .email-error-empty, .email-error-captcha {
     color: #a94442;
     background-color: #f2dede;
     border-color: #ebccd1;
@@ -114,7 +114,11 @@ h3, strong {
     float: right;
 }
 
-#contact_form, #contact_form > input, #contact_form > textarea {
+#contact {
+    min-height: 650px;
+}
+
+#contact_form, #contact_form > input, #contact_form > textarea, #contact_captcha {
     width: 100%;
     margin: 0;
     padding: 4px;
@@ -123,7 +127,7 @@ h3, strong {
     box-sizing: border-box;
 }
 
-#contact_name, #contact_email, #contact_content {
+#contact_name, #contact_email, #contact_content, #contact_captcha {
     border: 1px dashed #ccc;
 }
 #contact_name, #contact_email {
@@ -131,6 +135,14 @@ h3, strong {
 }
 #contact_form > #contact_content {
     height: 200px;
+}
+#captcha_container {
+    display: none;
+    overflow-x: hidden;
+    margin-bottom: 10px;
+}
+#captcha_container.visible {
+    display: block;
 }
 #contact_form > [type=submit] {
     width: 100%;

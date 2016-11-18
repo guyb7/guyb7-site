@@ -21,3 +21,14 @@ SENT_TO=
 * `sudo service guyb7 stop`
 * Status `systemctl status guyb7.service`
 * Log `sudo journalctl --follow -u guyb7 --since "1 hour ago"`
+
+## Deploy
+```
+cd /var/www/guyb7
+git checkout .
+git clean -f -d
+git pull
+yarn install
+chmod +x guyb7.js
+sudo systemctl restart guyb7
+```

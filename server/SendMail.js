@@ -1,6 +1,8 @@
 'use strict'
 
-const nodemailer = require('nodemailer')
+const env         = require('node-env-file')
+env(__dirname + '/../config/config.env')
+const nodemailer  = require('nodemailer')
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -8,6 +10,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SEND_PASS
   }
 })
+
 
 module.exports = {
   send(data, cb) {
@@ -36,6 +39,9 @@ module.exports = {
       html: html
     };
     transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.error(error, info)
+      }
       cb(error ? false : true)
     })
   }

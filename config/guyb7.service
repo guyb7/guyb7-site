@@ -1,0 +1,14 @@
+[Unit]
+Description=GuyB7 Site
+After=network.target
+
+[Service]
+ExecStart=/var/www/guyb7/guyb7.js
+Restart=always
+User=ubuntu
+Group=ubuntu
+Environment=PATH=/usr/bin:/usr/local/bin
+WorkingDirectory=/var/www/guyb7
+
+[Install]
+WantedBy=multi-user.target

@@ -5,6 +5,7 @@ body {
     padding: 0;
     margin: 0;
     font-size: 16px;
+    letter-spacing: 0.3px;
 }
 .clearfix:after {
     clear: both;
@@ -26,12 +27,12 @@ body {
 }
 
 h1 {
-    font-size: 3.75em;
+    font-size: 3em;
     color: #333;
     margin-bottom: 0;
 }
 h2 {
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: 300;
     color: #999;
     margin-top: 0;
@@ -43,8 +44,9 @@ h2 {
     margin: 0 20px 20px 0;
 }
 .hello-text {
-    line-height: 26px;
-    margin-bottom: 10px;
+    line-height: 1.25em;
+    padding: 10px;
+    margin: 0;
 }
 #main > section {
     margin-top: 40px;
@@ -109,7 +111,12 @@ h3, strong {
 }
 .experience-item {
     font-size: 0.9em;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+}
+.experience-position {
+    font-weight: 300;
+    color: #999;
+    margin-left: 10px;
 }
 
 .experience-year {

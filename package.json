@@ -5,7 +5,8 @@
   "main": "server/guyb7.js",
   "scripts": {
     "start": "node guyb7.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pdf": "chrome --headless --disable-gpu --print-to-pdf=static/Guy_Brukhis_CV.pdf http://localhost:3005"
   },
   "repository": {
     "type": "git",

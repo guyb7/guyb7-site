@@ -37,6 +37,26 @@ h2 {
     color: #999;
     margin-top: 0;
 }
+.cv-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.cv-buttons a {
+    opacity: 0.7;
+    text-decoration: none;
+    padding: 5px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.cv-buttons a:hover {
+    opacity: 1;
+}
+.cv-buttons svg {
+    height: 1em;
+    width: auto;
+}
 .main-image {
     height: 150px;
     border-radius: 150px;
@@ -185,8 +205,8 @@ h3, strong {
 
 
 @media (max-width: 797px) {
-    body {
-        font-size: 20px;
+    .mobile-hidden {
+        display: none !important;
     }
     #main {
         position: initial;
@@ -204,5 +224,26 @@ h3, strong {
         left: -10px;
         margin-bottom: 20px;
         font-size: 1.25em;
+    }
+    .main-image {
+        margin-left: 10px;
+    }
+}
+@media (max-width: 597px) {
+    body {
+        font-size: 20px;
+    }
+}
+
+@media print {
+    .print-hidden {
+        display: none;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    .col-6-print {
+        float: left;
+        width: 50%;
     }
 }

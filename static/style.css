@@ -252,6 +252,11 @@ h3, strong {
 }
 
 @media print {
+    body {
+        font-size: 14px;
+        font-weight: 300;
+        padding: 10px 30px;
+    }
     .print-hidden {
         display: none;
     }

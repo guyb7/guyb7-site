@@ -1,12 +1,10 @@
 {
   "name": "guyb7",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Guy Brukhis CV homepage",
-  "main": "server/guyb7.js",
+  "main": "static/index.html",
   "scripts": {
-    "start": "node guyb7.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pdf": "chrome --headless --disable-gpu --print-to-pdf=static/Guy_Brukhis_CV.pdf http://localhost:3005"
   },
   "repository": {
     "type": "git",
@@ -22,9 +20,5 @@
   "license": "ISC",
   "homepage": "https://guyb7.com",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
-    "node-env-file": "^0.1.8",
-    "nodemailer": "^2.6.4"
   }
 }

@@ -92,23 +92,6 @@ h2 {
     border-top: 1px solid #e9e9e9;
 }
 
-.alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-}
-.email-success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-.email-fail, .email-error-empty, .email-error-captcha {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
-}
-
 @media (min-width: 780px) {
     .col-4 {
         float: left;
@@ -150,16 +133,7 @@ h3, strong {
 }
 
 #contact {
-    min-height: 650px;
-}
-
-#contact_form, #contact_form > input, #contact_form > textarea {
-    width: 100%;
-    margin: 0;
-    padding: 4px;
-    font-size: 0.9em;
-    font-family: 'Open Sans', sans-serif;
-    box-sizing: border-box;
+    min-height: 300px;
 }
 
 #contact_name, #contact_email, #contact_content {
@@ -167,28 +141,6 @@ h3, strong {
 }
 #contact_name, #contact_email {
     border-bottom: 0 solid #fff;
-}
-#contact_form > #contact_message {
-    height: 200px;
-}
-#contact_form > [type=submit] {
-    width: 100%;
-    margin-bottom: 200px;
-    color: #444;
-    border: 0 rgba(0,0,0,0);
-    background-color: #e6e6e6;
-    text-decoration: none;
-    border-radius: 2px;
-}
-#contact_form > [type=submit]:hover {
-    color: #000;
-    background-color: #ddd;
-    cursor: pointer;
-}
-#contact_form > [type=submit]:focus {
-    color: #333;
-    background-color: #ccc;
-    outline: none;
 }
 
 @media (max-width: 797px) {

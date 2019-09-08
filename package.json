@@ -1,10 +1,11 @@
 {
   "name": "guyb7",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Guy Brukhis CV homepage",
   "main": "static/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "yarn now dev ./static"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,8 @@
   "author": "Guy Brukhis <guy.br7@gmail.com> (https://guyb7.com/)",
   "license": "ISC",
   "homepage": "https://guyb7.com",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "now": "^16.2.0"
   }
 }

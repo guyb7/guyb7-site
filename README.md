@@ -1,34 +1,18 @@
 # GuyB7 Site
 
 ## Install
-`yarn install`
-create a `config/config.env` file (see structure below)
+```
+yarn install
+```
 
-### Config file
-PORT=3005
-SEND_USER=
-SEND_PASS=
-SENT_TO=
-
-## Install service
-* `sudo chmod +x ./guyb7.js`
-* copy `config/guyb7.service` to `/etc/systemd/system`
-* `sudo systemctl daemon-reload`
-
-### Use service
-* `sudo service guyb7 start`
-* `sudo service guyb7 restart`
-* `sudo service guyb7 stop`
-* Status `systemctl status guyb7.service`
-* Log `sudo journalctl --follow -u guyb7 --since "1 hour ago"`
+## Develop
+Serve the static files inside `/static` using `now dev`:
+```
+yarn dev
+```
 
 ## Deploy
+Deploys automatically with Netlify from the master branch in GitHub:
 ```
-cd /var/www/guyb7
-git checkout .
-git clean -f -d
-git pull
-yarn install
-chmod +x guyb7.js
-sudo systemctl restart guyb7
+git push
 ```
